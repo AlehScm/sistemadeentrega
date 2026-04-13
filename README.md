@@ -1,69 +1,61 @@
-## 📦 Sistema de Controle de Entregas
+# 📦 Sistema de Controle de Entregas
 
-Este projeto é um sistema de gerenciamento de entregas desenvolvido para controlar a entrada, armazenamento e retirada de produtos destinados a moradores de uma residência ou condomínio.
+Um sistema completo de gerenciamento de entregas desenvolvido para **condomínios, portarias e empresas**, que facilita o controle de entrada, armazenamento e retirada de encomendas destinadas aos moradores ou funcionários.
 
-O sistema permite registrar entregas associando produtos, moradores e suas respectivas residências, além de acompanhar o status de retirada.
+Com ele é possível registrar entregas, vincular produtos a moradores e residências, acompanhar o status de retirada e manter tudo organizado de forma segura e eficiente.
 
----
+## 🚀 Tecnologias Utilizadas
 
-## 🚀 Funcionalidades
+- **Frontend**: [Next.js](https://nextjs.org/) (App Router + React Server Components)
+- **Backend**: [NestJS](https://nestjs.com/) com TypeScript
+- **Banco de Dados**: [Supabase](https://supabase.com/) (PostgreSQL)
+- **ORM**: [TypeORM](https://typeorm.io/)
+- **Estilização**: (Tailwind CSS / Shadcn/ui - se estiver usando)
 
-- 📥 Cadastro de entregas
-- 👤 Gerenciamento de moradores
-- 🏠 Controle de residências (bloco e número do apartamento)
-- 📦 Registro de produtos recebidos
-- ✅ Controle de retirada de entregas (retirado ou pendente)
+## ✨ Funcionalidades Principais
 
----
+- 📥 **Cadastro rápido de entregas** com vínculo automático a morador, residência e produto
+- 👤 **Gerenciamento completo de moradores** (nome, CPF, RG, telefone)
+- 🏠 **Controle de residências** por bloco e número do apartamento
+- 📦 **Registro detalhado de produtos** recebidos
+- ✅ **Controle de status de retirada** (pendente ou retirado)
+- 🔄 Relacionamentos robustos entre as entidades (Entrega ↔ Morador ↔ Residência ↔ Produto)
 
 ## 🗂️ Estrutura do Banco de Dados
 
-O sistema é baseado nas seguintes entidades:
+O sistema é modelado com as seguintes entidades principais:
 
-### 📦 Entrega
-- `id`
-- `morador_id` → Relacionamento com Morador
-- `residencia_id` → Relacionamento com Residência
-- `produto_id` → Relacionamento com Produto
-- `retirada` → Indica se o item foi retirado (true/false)
+- **Entrega** — Vincula morador, residência, produto e status de retirada
+- **Morador** — Dados pessoais (nome, CPF, RG, contato)
+- **Residência** — Bloco e número do apartamento
+- **Produto** — Nome e descrição do item entregue
 
-### 👤 Morador
-- `id`
-- `nome`
-- `cpf`
-- `rg`
-- `numero`
+Todos os relacionamentos são mapeados via TypeORM com Supabase PostgreSQL.
 
-### 🏠 Residência
-- `id`
-- `bloco`
-- `numero_apto`
+## 🎯 Objetivo do Projeto
 
-### 📦 Produto
-- `id`
-- `nome`
+Eliminar o uso de planilhas ou controles manuais nas portarias, oferecendo uma solução moderna, rastreável e segura para a gestão de recebimentos. Ideal para condomínios residenciais, empresariais ou qualquer ambiente que receba volumes frequentes de entregas.
 
----
+## 🚧 Melhorias Futuras (Roadmap)
 
-## 🔗 Relacionamentos
+- Histórico completo de entregas por morador
+- Notificações automáticas (e-mail/SMS/WhatsApp) ao morador
+- Interface mobile responsiva ou PWA
+- Sistema de autenticação com controle de usuários e permissões (portaria x administrador)
+- Relatórios e dashboards analíticos
+- Integração com QR Code para retirada rápida
 
-- Uma **entrega** está vinculada a:
-  - um **morador**
-  - uma **residência**
-  - um **produto**
+## Como Rodar o Projeto
 
----
+(Adicione aqui as instruções de instalação e execução — exemplo:)
 
-## 🛠️ Objetivo
+```bash
+# Backend (NestJS)
+cd backend
+npm install
+npm run start:dev
 
-Facilitar o controle e rastreamento de entregas em ambientes como condomínios, portarias ou empresas, garantindo organização e segurança na gestão dos itens recebidos.
-
----
-
-## 📌 Possíveis melhorias futuras
-
-- Histórico de entregas por morador
-- Notificações de chegada de encomendas
-- Interface web/mobile
-- Controle de usuários e permissões
-- Relatórios e dashboards
+# Frontend (Next.js)
+cd frontend
+npm install
+npm run dev
