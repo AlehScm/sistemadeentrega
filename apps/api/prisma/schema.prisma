@@ -1,0 +1,77 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum StatusRetirada {
+  PENDENTE
+  RETIRADO
+}
+
+model Usuario {
+  id        String   @id @default(uuid()) @db.Uuid
+  email     String   @unique
+  nome      String
+  senhaHash String   @map("senha_hash")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("usuarios")
+}
+
+model Morador {
+  id        String    @id @default(uuid()) @db.Uuid
+  nome      String
+  cpf       String    @unique
+  rg        String?
+  telefone  String?
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  entregas  Entrega[]
+
+  @@map("moradores")
+}
+
+model Residencia {
+  id          String    @id @default(uuid()) @db.Uuid
+  bloco       String
+  apartamento String    @map("apartamento")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  entregas    Entrega[]
+
+  @@unique([bloco, apartamento])
+  @@map("residencias")
+}
+
+model Produto {
+  id        String    @id @default(uuid()) @db.Uuid
+  nome      String
+  descricao String?
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  entregas  Entrega[]
+
+  @@map("produtos")
+}
+
+model Entrega {
+  id           String         @id @default(uuid()) @db.Uuid
+  moradorId    String         @map("morador_id") @db.Uuid
+  residenciaId String         @map("residencia_id") @db.Uuid
+  produtoId    String         @map("produto_id") @db.Uuid
+  status       StatusRetirada @default(PENDENTE)
+  createdAt    DateTime       @default(now()) @map("created_at")
+  updatedAt    DateTime       @updatedAt @map("updated_at")
+
+  morador    Morador    @relation(fields: [moradorId], references: [id])
+  residencia Residencia @relation(fields: [residenciaId], references: [id])
+  produto    Produto    @relation(fields: [produtoId], references: [id])
+
+  @@map("entregas")
+}
