@@ -7,4 +7,5 @@ import type {
 export interface UsuarioRepository {
   create(data: UsuarioCreatePersistenceInput): Promise<UsuarioCriado>;
   findManyForList(): Promise<UsuarioListaItem[]>;
+  findByEmail(email: string): Promise<import("../../../types/usuario/usuario.types").UsuarioBanco | null>;
 }

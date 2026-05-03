@@ -43,4 +43,10 @@ export class UsuarioPrismaRepository implements UsuarioRepository {
       },
     });
   }
+
+  async findByEmail(email: string) {
+    return this.db.usuario.findUnique({
+      where: { email },
+    });
+  }
 }
