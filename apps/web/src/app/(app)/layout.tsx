@@ -1,10 +1,30 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function AppLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const router = useRouter();
+  const [isAuth, setIsAuth] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (!user) {
+      router.push("/login");
+    } else {
+      setIsAuth(true);
+    }
+  }, [router]);
+
+  if (!isAuth) {
+    return <div className="flex min-h-screen items-center justify-center bg-[var(--background)]">Carregando...</div>;
+  }
+
   return (
     <div className="flex min-h-full flex-col bg-[var(--background)]">
       <header className="sticky top-0 z-40 border-b border-[var(--border)] bg-[var(--card)]/95 backdrop-blur-md">

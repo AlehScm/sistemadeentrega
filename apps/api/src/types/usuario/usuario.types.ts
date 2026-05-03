@@ -15,3 +15,13 @@ export type UsuarioCreatePersistenceInput = {
   nome: string;
   senhaHash: string;
 };
+
+/** Retorno completo do banco para autenticação. */
+export type UsuarioBanco = {
+  id: string;
+  email: string;
+  nome: string;
+  senhaHash: string;
+  createdAt: Date;
+  updatedAt: Date;
+};

@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { usuariosRouter } from "./controllers/usuarios";
+import { authRouter } from "./controllers/auth";
 
 export function createApp() {
   const app = express();
@@ -13,6 +14,7 @@ export function createApp() {
   });
 
   app.use("/usuarios", usuariosRouter);
+  app.use("/auth", authRouter);
 
   app.use(
     (
@@ -22,7 +24,11 @@ export function createApp() {
       _next: express.NextFunction,
     ) => {
       console.error(err);
-      res.status(500).json({ error: "Erro interno do servidor" });
+      res.status(500).json({ 
+        error: "Erro interno do servidor",
+        detail: err instanceof Error ? err.message : String(err),
+        stack: err instanceof Error ? err.stack : undefined
+      });
     },
   );
 
